@@ -24,6 +24,27 @@ Contains the initialState as well as the reducer
 
 Creates the Context, persists State in localStorage, and updates state from localStorage
 
+```
+useEffect(() => {
+    // checks if there already is a state in localStorage
+    if (JSON.parse(localStorage.getItem("state"))) {
+      // if yes, update the current state with the stored one
+      dispatch({
+        type: "init_stored",
+        item: JSON.parse(localStorage.getItem("state")),
+      });
+    }
+  }, []);
+  useEffect(() => {
+    if (state !== initialState) {
+      // creates and / or sets a new localStorage variable called "state"
+      // this is used to persist data in localStorage
+      localStorage.setItem("state", JSON.stringify(state));
+    }
+  }, [state]);
+
+```
+
 #### `pages/_app.tsx`
 
 Wraps the app in a Provider for the global state
